@@ -1,0 +1,118 @@
+{
+  //"ReRoutes": [15.x
+  "Routes": [ //之前根节点是 ReRoutes(15.x) 现在是 Routes(16.x)
+    //{
+    //  "DownstreamPathTemplate": "/",
+    //  "UpstreamPathTemplate": "/",
+    //  "UpstreamHttpMethod": [
+    //    "Get"
+    //  ],
+    //  "AddHeadersToRequest": {},
+    //  "AddClaimsToRequest": {},
+    //  "RouteClaimsRequirement": {},
+    //  "AddQueriesToRequest": {},
+    //  "RequestIdKey": "",
+    //  "FileCacheOptions": {
+    //    "TtlSeconds": 0,
+    //    "Region": ""
+    //  },
+    //  "ReRouteIsCaseSensitive": false,
+    //  "ServiceName": "",
+    //  "DownstreamScheme": "http",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 8001
+    //    }
+    //  ],
+    //  "QoSOptions": {
+    //    "ExceptionsAllowedBeforeBreaking": 0,
+    //    "DurationOfBreak": 0,
+    //    "TimeoutValue": 0
+    //  },
+    //  "LoadBalancer": "",
+    //  "RateLimitOptions": {
+    //    "ClientWhitelist": [],
+    //    "EnableRateLimiting": false,
+    //    "Period": "",
+    //    "PeriodTimespan": 0,
+    //    "Limit": 0
+    //  },
+    //  "AuthenticationOptions": {
+    //    "AuthenticationProviderKey": "",
+    //    "AllowedScopes": []
+    //  },
+    //  "HttpHandlerOptions": {
+    //    "AllowAutoRedirect": true,
+    //    "UseCookieContainer": true,
+    //    "UseTracing": true
+    //  },
+    //  "UseServiceDiscovery": false
+    //},
+    {
+      "DownstreamPathTemplate": "/api/ocelot/{Id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/ocelot/{Id}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/test",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8443
+        }
+      ],
+      "UpstreamPathTemplate": "/ocelottest",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+    //// 转发所有的请求
+    //{
+    //  "DownstreamPathTemplate": "/{url}",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 44375
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/{url}",
+    //  "UpstreamHttpMethod": [ "Get" ]
+    //},
+    //{
+    //  "DownstreamPathTemplate": "/{url}",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 44375
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/{url}",
+    //  "Priority": 0, //0是最低的优先级，数字越大，优先级越高。
+    //  "UpstreamHttpMethod": [ "Get" ],
+    //  "UpstreamHost": "localhost:47270" //如果路由配置中包含两个除UpstreamHost以外都相同的路由，即其中一个带有UpstreamHost，而另外一个没有，则Ocelot会优先选择带有UpstreamHost的路由
+    //}
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:4727" //对外暴露的Url
+  }
+}
+//Downstream 下游服务配置
+//UpStream 上游服务配置 
+//Aggregates 服务聚合配置 
+//ServiceName, LoadBalancer, UseServiceDiscovery 服务发现配置 
+//AuthenticationOptions 服务认证配置 
+//RouteClaimsRequirement Claims 鉴权配置 
+//RateLimitOptions 限流配置 
+//FileCacheOptions 缓存配置 
+//QosOptions 服务质量与熔断配置 
+//DownstreamHeaderTransform 头信息转发配置
+//https://www.cnblogs.com/markjiang7m2/p/10857688.html

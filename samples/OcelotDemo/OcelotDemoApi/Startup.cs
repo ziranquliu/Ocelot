@@ -28,7 +28,11 @@ namespace OcelotDemoApi
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddControllers();
+            //services.AddOcelot()
+            //        .AddSingletonDefinedAggregator<LeaderAdvancedAggregator>();
+            //或使用依赖注入 二者任何一个都可以
             services.AddOcelot();
+            services.AddSingleton<LeaderAdvancedDependency>();//使用依赖注入
 
             services.AddMvc(conf =>
             {

@@ -1,6 +1,6 @@
-{
+ï»¿{
   //"ReRoutes": [15.x
-  "Routes": [ //Ö®Ç°¸ù½ÚµãÊÇ ReRoutes(15.x) ÏÖÔÚÊÇ Routes(16.x)
+  "Routes": [ //ä¹‹å‰æ ¹èŠ‚ç‚¹æ˜¯ ReRoutes(15.x) ç°åœ¨æ˜¯ Routes(16.x)
     //{
     //  "DownstreamPathTemplate": "/",
     //  "UpstreamPathTemplate": "/",
@@ -72,8 +72,8 @@
       ],
       "UpstreamPathTemplate": "/ocelottest",
       "UpstreamHttpMethod": [ "Get" ]
-    }
-    //// ×ª·¢ËùÓĞµÄÇëÇó
+    },
+    //// è½¬å‘æ‰€æœ‰çš„è¯·æ±‚
     //{
     //  "DownstreamPathTemplate": "/{url}",
     //  "DownstreamScheme": "https",
@@ -96,23 +96,102 @@
     //    }
     //  ],
     //  "UpstreamPathTemplate": "/{url}",
-    //  "Priority": 0, //0ÊÇ×îµÍµÄÓÅÏÈ¼¶£¬Êı×ÖÔ½´ó£¬ÓÅÏÈ¼¶Ô½¸ß¡£
+    //  "Priority": 0, //0æ˜¯æœ€ä½çš„ä¼˜å…ˆçº§ï¼Œæ•°å­—è¶Šå¤§ï¼Œä¼˜å…ˆçº§è¶Šé«˜ã€‚
     //  "UpstreamHttpMethod": [ "Get" ],
-    //  "UpstreamHost": "localhost:47270" //Èç¹ûÂ·ÓÉÅäÖÃÖĞ°üº¬Á½¸ö³ıUpstreamHostÒÔÍâ¶¼ÏàÍ¬µÄÂ·ÓÉ£¬¼´ÆäÖĞÒ»¸ö´øÓĞUpstreamHost£¬¶øÁíÍâÒ»¸öÃ»ÓĞ£¬ÔòOcelot»áÓÅÏÈÑ¡Ôñ´øÓĞUpstreamHostµÄÂ·ÓÉ
+    //  "UpstreamHost": "localhost:47270" //å¦‚æœè·¯ç”±é…ç½®ä¸­åŒ…å«ä¸¤ä¸ªé™¤UpstreamHostä»¥å¤–éƒ½ç›¸åŒçš„è·¯ç”±ï¼Œå³å…¶ä¸­ä¸€ä¸ªå¸¦æœ‰UpstreamHostï¼Œè€Œå¦å¤–ä¸€ä¸ªæ²¡æœ‰ï¼Œåˆ™Ocelotä¼šä¼˜å…ˆé€‰æ‹©å¸¦æœ‰UpstreamHostçš„è·¯ç”±
     //}
+    {
+      "DownstreamPathTemplate": "/api/ocelot/aggrWilling",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/ocelot/aggrWilling",
+      "UpstreamHttpMethod": [ "Get" ],
+      "Key": "aggr_willing",
+      "Priority": 2
+    },
+    {
+      "DownstreamPathTemplate": "/api/ocelot/aggrJack",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/ocelot/aggrJack",
+      "UpstreamHttpMethod": [ "Get" ],
+      "Key": "aggr_jack",
+      "Priority": 2
+    },
+    {
+      "DownstreamPathTemplate": "/api/ocelot/aggrError/1",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/ocelot/aggrError/1",
+      "UpstreamHttpMethod": [ "Get" ],
+      "Key": "aggr_error",
+      "Priority": 2
+    }, //è´Ÿè½½å‡è¡¡ https://localhost:44375/ocelot/5
+    {
+      "DownstreamPathTemplate": "/api/ocelot/{postId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        },
+        {
+          "Host": "localhost",
+          "Port": 6000
+        }
+      ],
+      "Priority": 20,
+      "UpstreamPathTemplate": "/ocelot/{postId}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+        //"LeadConnectionè´Ÿè½½å‡è¡¡å™¨ç®—æ³•å…±æœ‰4ç§ï¼š
+        //"LeastConnection",æŠŠæ–°è¯·æ±‚å‘é€åˆ°ç°æœ‰è¯·æ±‚æœ€å°‘çš„æœåŠ¡ä¸Š
+        //"RoundRobin", è½®è¯¢å¯ç”¨çš„æœåŠ¡å¹¶å‘é€è¯·æ±‚
+        //"NoLoadBalancer", ä¸è´Ÿè½½å‡è¡¡ï¼Œæ€»æ˜¯å‘å¾€ç¬¬ä¸€ä¸ªå¯ç”¨çš„ä¸‹æ¸¸æœåŠ¡
+        //"CookieStickySessions",ä½¿ç”¨cookieå…³è”æ‰€æœ‰ç›¸å…³çš„è¯·æ±‚åˆ°åˆ¶å®šçš„æœåŠ¡
+      }
+    }
+  ],
+  "Aggregates": [ //è¯·æ±‚èšåˆï¼šä»…æ”¯æŒGETæ–¹å¼ï¼›ä¸‹æ¸¸æœåŠ¡è¿”å›ç±»å‹è¦æ±‚ä¸ºapplication/jsonï¼›è¿”å›å†…å®¹ç±»å‹ä¸ºapplication/jsonï¼Œä¸ä¼šè¿”å›404è¯·æ±‚
+    //https://localhost:44375/aggrLeaderAdvanced
+    {
+      "RouteKeys": [
+        "aggr_willing",
+        "aggr_jack",
+        "aggr_error"
+      ],
+      "UpstreamPathTemplate": "/aggrLeaderAdvanced",
+      "Aggregator": "LeaderAdvancedAggregator"
+    }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:4727" //¶ÔÍâ±©Â¶µÄUrl
+    "BaseUrl": "https://localhost:44375" //å¯¹å¤–æš´éœ²çš„Url
   }
 }
-//Downstream ÏÂÓÎ·şÎñÅäÖÃ
-//UpStream ÉÏÓÎ·şÎñÅäÖÃ 
-//Aggregates ·şÎñ¾ÛºÏÅäÖÃ 
-//ServiceName, LoadBalancer, UseServiceDiscovery ·şÎñ·¢ÏÖÅäÖÃ 
-//AuthenticationOptions ·şÎñÈÏÖ¤ÅäÖÃ 
-//RouteClaimsRequirement Claims ¼øÈ¨ÅäÖÃ 
-//RateLimitOptions ÏŞÁ÷ÅäÖÃ 
-//FileCacheOptions »º´æÅäÖÃ 
-//QosOptions ·şÎñÖÊÁ¿ÓëÈÛ¶ÏÅäÖÃ 
-//DownstreamHeaderTransform Í·ĞÅÏ¢×ª·¢ÅäÖÃ
+//Downstream ä¸‹æ¸¸æœåŠ¡é…ç½®
+//UpStream ä¸Šæ¸¸æœåŠ¡é…ç½® 
+//Aggregates æœåŠ¡èšåˆé…ç½® 
+//ServiceName, LoadBalancer, UseServiceDiscovery æœåŠ¡å‘ç°é…ç½® 
+//AuthenticationOptions æœåŠ¡è®¤è¯é…ç½® 
+//RouteClaimsRequirement Claims é‰´æƒé…ç½® 
+//RateLimitOptions é™æµé…ç½® 
+//FileCacheOptions ç¼“å­˜é…ç½® 
+//QosOptions æœåŠ¡è´¨é‡ä¸ç†”æ–­é…ç½® 
+//DownstreamHeaderTransform å¤´ä¿¡æ¯è½¬å‘é…ç½®
 //https://www.cnblogs.com/markjiang7m2/p/10857688.html

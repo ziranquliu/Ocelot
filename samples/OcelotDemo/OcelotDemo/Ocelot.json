@@ -148,14 +148,14 @@
       "UpstreamPathTemplate": "/ocelot/ratelimit/{postId}",
       "UpstreamHttpMethod": [ "Get" ],
       "Priority": 2,
-      "RateLimitOptions": {
-        "ClientWhiteList": [
+      "RateLimitOptions": { //流量限制 只要在路由中添加RateLimitOptions配置即可
+        "ClientWhiteList": [ //数组，在请求头中包含ClientId=xxx的请求不受限流控制，其中ClientId这个key可以修改，xxx表示配置的白名单。
           "markadmin"
         ],
-        "EnableRateLimiting": true,
-        "Period": "1m",
-        "PeriodTimespan": 30,
-        "Limit": 5
+        "EnableRateLimiting": true, //是否启用限流
+        "Period": "1m", //限流控制的时间周期，输入单位支持s（秒）, m（分）, h（时）, d（天）
+        "PeriodTimespan": 30, //恢复等待时间，当访问超过限流限制的次数后，需要等待的时间，单位为s，如当一分钟内访问超过5次，就需要等待30秒后，访问才会重新有效
+        "Limit": 5 //一个时间周期内允许访问的最大次数
       }
     },
 
@@ -171,7 +171,7 @@
       "UpstreamPathTemplate": "/ocelot/qos/{postId}",
       "UpstreamHttpMethod": [ "Get" ],
       "Priority": 2,
-      "QoSOptions": {
+      "QoSOptions": { // 服务质量
         "ExceptionsAllowedBeforeBreaking": 3,
         "DurationOfBreak": 3000,
         "TimeoutValue": 5000
@@ -204,11 +204,11 @@
       "Port": 8500,
       "Type": "Consul"
     },
-    "RateLimitOptions": {
-      "DisableRateLimitHeaders": true,
-      "QuotaExceededMessage": "Customize Tips!",
-      "HttpStatusCode": 999,
-      "ClientIdHeader": "Test"
+    "RateLimitOptions": { //流量限制的全局配置
+      "DisableRateLimitHeaders": true, //当设为true时，请求头中就不会输出流量限制的相关信息，默认值："false"
+      "QuotaExceededMessage": "Customize Tips!", //当请求数量超出流量限制时，输出的信息，默认值："API calls quota exceeded! maximum admitted {Limit} per {Period}."
+      "HttpStatusCode": 999, //当请求数量超出流量限制时，输出的状态码，默认值："429"
+      "ClientIdHeader": "Test" //标识为白名单中的客户端的请求头key，默认值："ClientId"
     }
   }
 }

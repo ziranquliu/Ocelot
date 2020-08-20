@@ -172,9 +172,10 @@
       "UpstreamHttpMethod": [ "Get" ],
       "Priority": 2,
       "QoSOptions": { // 服务质量
-        "ExceptionsAllowedBeforeBreaking": 3,
-        "DurationOfBreak": 3000,
-        "TimeoutValue": 5000
+        "ExceptionsAllowedBeforeBreaking": 3, //允许异常次数，当Ocelot转发给该下游服务连续出现异常次数达到该数字时，Ocelot会进行自动熔断，一段时间内不再向该下游服务转发请求
+        "DurationOfBreak": 3000, //熔断时间，单位为ms（毫秒），持续多长时间不向该下游服务转发请求
+        "TimeoutValue": 5000 //服务质量配置项，超时时间，单位为ms（毫秒），当Ocelot向下游服务转发请求多长时间后，自动认为该请求超时
+        //ExceptionsAllowedBeforeBreaking 必须跟 DurationOfBreak一起使用，TimeoutValue可以单独使用。
       }
     }
   ],

@@ -166,6 +166,17 @@
         //"NoLoadBalancer", 不负载均衡，总是发往第一个可用的下游服务
         //"CookieStickySessions",使用cookie关联所有相关的请求到制定的服务
       }
+    }, //服务发现
+    {
+      "DownstreamPathTemplate": "/api/ocelot/consulWilling",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/ocelot/consulWilling",
+      "UpstreamHttpMethod": [ "Get" ],
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "ServiceName": "ocelotService",
+      "Priority": 2
     }
   ],
   "Aggregates": [ //请求聚合：仅支持GET方式；下游服务返回类型要求为application/json；返回内容类型为application/json，不会返回404请求
@@ -181,7 +192,12 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:44375" //对外暴露的Url
+    "BaseUrl": "https://localhost:44375", //对外暴露的Url
+    "ServiceDiscoveryProvider": { //服务发现 Consul
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul" //Eureka
+    }
   }
 }
 //Downstream 下游服务配置
@@ -195,3 +211,58 @@
 //QosOptions 服务质量与熔断配置 
 //DownstreamHeaderTransform 头信息转发配置
 //https://www.cnblogs.com/markjiang7m2/p/10857688.html
+
+//以下是动态路由配置 简单模式
+//{
+//  "ReRoutes": [],
+//  "Aggregates": [],
+//  "GlobalConfiguration": {
+//    "BaseUrl": "http://localhost:4727",
+//    "ServiceDiscoveryProvider": {
+//      "Host": "localhost",
+//      "Port": 8500,
+//      "Type": "Consul"
+//    },
+//    "DownstreamScheme": "http"
+//  }
+//}
+
+//以下是动态路由配置 高级模式
+//{
+//  "ReRoutes": [],
+//  "Aggregates": [],
+//  "GlobalConfiguration": {
+//    "RequestIdKey": null,
+//    "ServiceDiscoveryProvider": {
+//      "Host": "localhost",
+//      "Port": 8500,
+//      "Type": "Consul",
+//      "Token": null,
+//      "ConfigurationKey": null
+//    },
+//    "RateLimitOptions": {
+//      "ClientIdHeader": "ClientId",
+//      "QuotaExceededMessage": null,
+//      "RateLimitCounterPrefix": "ocelot",
+//      "DisableRateLimitHeaders": false,
+//      "HttpStatusCode": 429
+//    },
+//    "QoSOptions": {
+//      "ExceptionsAllowedBeforeBreaking": 0,
+//      "DurationOfBreak": 0,
+//      "TimeoutValue": 0
+//    },
+//    "BaseUrl": null,
+//    "LoadBalancerOptions": {
+//      "Type": "LeastConnection",
+//      "Key": null,
+//      "Expiry": 0
+//    },
+//    "DownstreamScheme": "http",
+//    "HttpHandlerOptions": {
+//      "AllowAutoRedirect": false,
+//      "UseCookieContainer": false,
+//      "UseTracing": false
+//    }
+//  }
+//}

@@ -7,6 +7,7 @@
   <ProjectExtensions><VisualStudio><UserProperties ocelot_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Ocelot.Provider.Consul\Ocelot.Provider.Consul.csproj" />
     <ProjectReference Include="..\..\..\src\Ocelot\Ocelot.csproj" />
   </ItemGroup>
 

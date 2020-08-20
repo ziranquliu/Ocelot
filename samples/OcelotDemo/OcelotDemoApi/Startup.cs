@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
+using Ocelot.Provider.Eureka;
 
 namespace OcelotDemoApi
 {
@@ -28,11 +30,13 @@ namespace OcelotDemoApi
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddControllers();
-            //services.AddOcelot()
-            //        .AddSingletonDefinedAggregator<LeaderAdvancedAggregator>();
-            //»òÊ¹ÓÃÒÀÀµ×¢Èë ¶şÕßÈÎºÎÒ»¸ö¶¼¿ÉÒÔ
-            services.AddOcelot();
-            services.AddSingleton<LeaderAdvancedDependency>();//Ê¹ÓÃÒÀÀµ×¢Èë
+            services.AddOcelot()
+                    .AddConsul()//æ·»åŠ Consulæ”¯æŒ
+                    //.AddEureka()//æ·»åŠ Eurekaæ”¯æŒ
+                    .AddSingletonDefinedAggregator<LeaderAdvancedAggregator>();
+            //æˆ–ä½¿ç”¨ä¾èµ–æ³¨å…¥ äºŒè€…ä»»ä½•ä¸€ä¸ªéƒ½å¯ä»¥
+            //services.AddOcelot();
+            //services.AddSingleton<LeaderAdvancedDependency>();//ä½¿ç”¨ä¾èµ–æ³¨å…¥
 
             services.AddMvc(conf =>
             {

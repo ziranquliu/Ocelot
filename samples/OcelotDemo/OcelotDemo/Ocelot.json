@@ -1,4 +1,4 @@
-{
+﻿{
   "ReRoutes": [
     {
       "DownstreamPathTemplate": "/api/ocelot/{postId}",
@@ -113,7 +113,7 @@
       "UpstreamPathTemplate": "/ocelot/8001/identityWilling",
       "UpstreamHttpMethod": [ "Get" ],
       "Priority": 2,
-      "AuthenticationOptions": {
+      "AuthenticationOptions": { //认证授权
         "AuthenticationProviderKey": "APIService8001",
         "AllowedScopes": []
       }
@@ -130,7 +130,7 @@
       "UpstreamPathTemplate": "/ocelot/8002/identityWilling",
       "UpstreamHttpMethod": [ "Get" ],
       "Priority": 2,
-      "AuthenticationOptions": {
+      "AuthenticationOptions": { //认证授权
         "AuthenticationProviderKey": "APIService8002",
         "AllowedScopes": []
       }
